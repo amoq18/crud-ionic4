@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
+import { RestApiService } from '../rest-api.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,37 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  classrooms: any[] = [];
+
+  constructor(
+    public api: RestApiService,
+    public loadingController: LoadingController
+  ) { }
+
+  ionViewWillEnter() {
+    this.api.getClassroom()
+    .subscribe(
+      (res: any) => {
+        this.classrooms = res.data;
+        console.log('res is ', res.data);
+      }, error => {
+        alert("ERROR");
+      }
+    );
+  }
+  
+  // async getClassrooms() {
+  //   const loading = await this.loadingController.create({
+  //     content: 'Loading'
+  //   });
+  //   await loading.present();
+  //   await this.api.getClassroom()
+  //     .subscribe(res => {
+  //       res => {
+  //         this.classrooms = [JSON.stringify(res)];
+  //       };
+  //     }
+  //   );
+  // }
 
 }
