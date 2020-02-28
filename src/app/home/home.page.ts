@@ -21,7 +21,6 @@ export class HomePage {
     .subscribe(
       (res: any) => {
         this.classrooms = res.data;
-        console.log('res is ', res.data);
       }, error => {
         alert("ERROR");
       }
