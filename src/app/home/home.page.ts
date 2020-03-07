@@ -10,6 +10,7 @@ import { RestApiService } from '../rest-api.service';
 export class HomePage {
 
   classrooms: any[] = [];
+  loaderToShow: any;
 
   constructor(
     public api: RestApiService,
@@ -27,18 +28,18 @@ export class HomePage {
     );
   }
   
-  // async getClassrooms() {
-  //   const loading = await this.loadingController.create({
-  //     content: 'Loading'
-  //   });
-  //   await loading.present();
-  //   await this.api.getClassroom()
-  //     .subscribe(res => {
-  //       res => {
-  //         this.classrooms = [JSON.stringify(res)];
-  //       };
-  //     }
-  //   );
-  // }
+  async getClassrooms() {
+    const loading = await this.loadingController.create({
+      content: 'Loading',
+    });
+    await loading.present();
+    this.api.getClassroom()
+      .subscribe(() => {
+        res => {
+          this.classrooms = res;
+        };
+      }
+    );
+  }
 
 }
