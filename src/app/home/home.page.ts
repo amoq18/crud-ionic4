@@ -29,10 +29,10 @@ export class HomePage {
   }
   
   async getClassrooms() {
-    const loading = await this.loadingController.create({
-      content: 'Loading',
-    });
-    await loading.present();
+    // const loading = await this.loadingController.create({
+    //   content: 'Loading',
+    // });
+    // await loading.present();
     this.api.getClassroom()
       .subscribe(() => {
         res => {
