@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from '../api.service';
+import { Student } from '../models/student';
 
 @Component({
   selector: 'app-student-edit',
@@ -7,9 +10,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentEditPage implements OnInit {
 
-  constructor() { }
+  id: number;
+  data: Student;
+
+  constructor(
+    public activatedRoute: ActivatedRoute,
+    public router: Router,
+    public apiService: ApiService
+  ) {
+    this.data = new Student();
+  }
 
   ngOnInit() {
+    this.id = this.activatedRoute.snapshot.params["id"];
+    //get item details using id
+    this.apiService.getItem(this.id).subscribe(response => {
+      console.log(response);
+      this.data = response;
+    })
+  }
+
+  update() {
+    //Update item by taking id and updated data object
+    this.apiService.updateItem(this.id, this.data).subscribe(response => {
+      this.router.navigate(['student-list']);
+    })
   }
 
 }

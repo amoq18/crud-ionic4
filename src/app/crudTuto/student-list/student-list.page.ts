@@ -16,7 +16,7 @@ export class StudentListPage implements OnInit {
     this.studentsData = [];
   }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.getAllStudents();
   }
 
@@ -27,7 +27,6 @@ export class StudentListPage implements OnInit {
       this.studentsData = response;
     })
   }
-
 
   delete(item) {
     //Delete item in Student data
