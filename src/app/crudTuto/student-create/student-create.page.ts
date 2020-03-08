@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../api.service';
+import { Router } from '@angular/router';
+import { Student } from '../models/student';
 
 @Component({
   selector: 'app-student-create',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentCreatePage implements OnInit {
 
-  constructor() { }
+  data: Student;
 
-  ngOnInit() {
+  constructor(
+    public apiService: ApiService,
+    public router: Router
+  ) { 
+    this.data = new Student;
+   }
+
+  ngOnInit() {  }
+  
+  submitForm() {
+    this.apiService.createItem(this.data).subscribe((response) => {
+      this.router.navigate(['student-list']);
+    });
+
   }
 
 }
