@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { Student } from './models/student';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,46 @@ export class ApiService {
   createItem(item): Observable<Student> {
     return this.http
       .post<Student>(this.base_path, JSON.stringify(item), this.httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+
+  // Get single student data by ID
+  getItem(id): Observable<Student> {
+    return this.http
+      .get<Student>(this.base_path + '/' + id)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+
+  // Get students data
+  getList(): Observable<Student> {
+    return this.http
+      .get<Student>(this.base_path)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+
+  // Update item by id
+  updateItem(id, item): Observable<Student> {
+    return this.http
+      .put<Student>(this.base_path + '/' + id, JSON.stringify(item), this.httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+
+  // Delete item by id
+  deleteItem(id) {
+    return this.http
+      .delete<Student>(this.base_path + '/' + id, this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
