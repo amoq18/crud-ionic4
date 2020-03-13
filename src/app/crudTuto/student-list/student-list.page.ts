@@ -16,6 +16,8 @@ export class StudentListPage implements OnInit {
     this.studentsData = [];
   }
 
+  ngOnInit() {}
+
   ionViewWillEnter() {
     this.getAllStudents();
   }
